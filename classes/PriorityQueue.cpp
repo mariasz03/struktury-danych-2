@@ -16,11 +16,6 @@ int PriorityQueue::getCapacity() const {
     return capacity_;
 };
 
-
-int getPriority();
-void setElement(uint32_t element);
-void setPriority(int priority);
-
 void PriorityQueue::swap(int index1, int index2) {
     Node temp;
     temp = array_[index1];
