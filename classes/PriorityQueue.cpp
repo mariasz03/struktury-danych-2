@@ -1,7 +1,7 @@
 #include "../headers/PriorityQueue.hpp"
 
-PriorityQueue::PriorityQueue(int capacity) : size_(0), capacity_(capacity) {
-    array_ = new uint32_t[capacity];
+PriorityQueue::PriorityQueue() : size_(0), capacity_(0) {
+    array_ = new Node[capacity_];
 };
 
 PriorityQueue::~PriorityQueue() {
@@ -15,3 +15,28 @@ int PriorityQueue::getSize() const {
 int PriorityQueue::getCapacity() const {
     return capacity_;
 };
+
+
+int getPriority();
+void setElement(uint32_t element);
+void setPriority(int priority);
+
+void PriorityQueue::swap(int index1, int index2) {
+    Node temp;
+    temp = array_[index1];
+    array_[index1] = array_[index2];
+    array_[index2] = temp;
+};
+
+void PriorityQueue::resize() {
+    int newCapacity = capacity_ * 2;
+    Node* newArray = new Node[newCapacity];
+
+    for (int i = 0; i < size_; i++) {
+        newArray[i] = array_[i];
+    }
+    delete[] array_;
+    array_ = newArray;
+    capacity_ = newCapacity;
+}
+

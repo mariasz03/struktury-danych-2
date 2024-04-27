@@ -1,9 +1,9 @@
 #pragma once
 #include "PriorityQueue.hpp"
 
-class PQArrayMax : private PriorityQueue {
+class PQArrayMax : public PriorityQueue {
 public:
-    PQArrayMax(int capacity = 0);
+    PQArrayMax() : PriorityQueue() {};
     void insert(uint32_t element, int priority) override;
     uint32_t extractMax() override;
     uint32_t peek() override;

@@ -1,18 +1,26 @@
 #pragma once
+#include <cstdint>
 #include <stdint.h>
 
 class PriorityQueue {
-public:
-    PriorityQueue(int capacity = 0);
-    ~PriorityQueue();
-    virtual void insert(uint32_t element, int priority);
-    virtual uint32_t extractMax();
-    virtual uint32_t peek();
-    virtual void modifyKey(uint32_t element, int priority);
-    int getSize() const;
-    int getCapacity() const;
 protected:
-    uint32_t *array_;
+    struct Node {
+        uint32_t element;
+        int priority;
+    };
+    Node *array_;
     int size_;
     int capacity_;
+    void resize();
+public:
+    PriorityQueue();
+    virtual ~PriorityQueue();
+    virtual void insert(uint32_t element, int priority) = 0;
+    virtual uint32_t extractMax() = 0;
+    virtual uint32_t peek() = 0;
+    virtual void modifyKey(uint32_t element, int priority) = 0;
+    int getSize() const;
+    int getCapacity() const;
+    void swap(int index1, int index2);
+
 };

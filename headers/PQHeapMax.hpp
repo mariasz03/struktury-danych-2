@@ -1,9 +1,10 @@
 #pragma once
 #include "PriorityQueue.hpp"
+#include <iostream>
 
-class PQHeapMax : private PriorityQueue {
+class PQHeapMax : public PriorityQueue {
 public:
-    PQHeapMax(int capacity = 0); // Konstruktor - tworzy kopiec o podanej pojemnosci
+    PQHeapMax() : PriorityQueue() {};
     void insert(uint32_t element, int priority) override;
     uint32_t extractMax() override;
     uint32_t peek() override;
