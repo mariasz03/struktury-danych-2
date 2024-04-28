@@ -1,5 +1,21 @@
 #include "../headers/PriorityQueue.hpp"
 
+bool PriorityQueue::Node::operator<(Node const& other) {
+    if (priority == other.priority) {
+        return fifoPriority > other.fifoPriority;
+    } else {
+        return priority < other.priority;
+    }
+};
+
+bool PriorityQueue::Node::operator>(Node const& other) {
+    if (priority == other.priority) {
+        return fifoPriority < other.fifoPriority;
+    } else {
+        return priority > other.priority;
+    }
+};
+
 PriorityQueue::PriorityQueue() : size_(0), capacity_(0) {
     array_ = new Node[capacity_];
 };

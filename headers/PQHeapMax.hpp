@@ -6,8 +6,8 @@ class PQHeapMax : public PriorityQueue {
 public:
     PQHeapMax() : PriorityQueue() {};
     void insert(uint32_t element, int priority) override;
-    uint32_t extractMax() override;
-    uint32_t peek() override;
+    Node extractMax() override;
+    Node peek() override;
     void modifyKey(uint32_t element, int priority) override;
 private:
     int parent(int index);

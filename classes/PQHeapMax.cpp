@@ -1,5 +1,7 @@
 #include "../headers/PQHeapMax.hpp"
 
+
+
 void PQHeapMax::insert(uint32_t element, int priority) {
     if (size_ == capacity_) {
         resize();
@@ -7,34 +9,45 @@ void PQHeapMax::insert(uint32_t element, int priority) {
 
     array_[size_].element = element;
     array_[size_].priority = priority;
+    array_[size_].fifoPriority = size_ + 1;
     heapifyUp(size_);
     size_++;
 }
 
-uint32_t PQHeapMax::extractMax() { // TODO: Zaimplementowac kopiec tak, aby przy wywolaniu funkcji extractMax, peek zwracany byl wezel (element + priorytet)
-// a nie tylko element
+PQHeapMax::Node PQHeapMax::extractMax() { 
     if (size_ == 0) {
-        std::cout << "Heap is empty!" << std::endl;
+        throw std::runtime_error("Heap is empty.");
     }
 
-    uint32_t maxElement = array_[0].element;
+    Node maxElement = array_[0];
     array_[0] = array_[size_-1];
     size_--;
     heapifyDown(0);
     return maxElement;
 }
 
-uint32_t PQHeapMax::peek() {
+PQHeapMax::Node PQHeapMax::peek() {
     if (size_ == 0) {
-        return 0;
+        throw std::runtime_error("Heap is empty.");
     }
 
-    return array_[0].element;
+    return array_[0];
 }
 
 void PQHeapMax::modifyKey(uint32_t element, int priority) // TODO: Zaimplementowac funkcje modifyKey()
 {
-    std::cout << ".";
+    int index = -1;
+    for (int i = 0; i < size_; i++) {
+        if (array_[i].element == element) {
+            index = i;
+        } 
+    }
+    if (index == -1) {
+        std::cerr << "Element not found in the heap.";
+        return;
+    }
+    array_[index].priority = priority;
+    heapifyDown(index);
 }
 
 int PQHeapMax::parent(int index) {
@@ -60,10 +73,10 @@ void PQHeapMax::heapifyDown(int index) {
     int maxIndex = index;
     int leftChild = left(index);
     int rightChild = right(index);
-    if (leftChild < size_ && array_[leftChild].priority > array_[maxIndex].priority) {
+    if (leftChild < size_ && array_[leftChild] > array_[maxIndex]) {
         maxIndex = leftChild;
     }
-    if (rightChild < size_ && array_[rightChild].priority > array_[maxIndex].priority) {
+    if (rightChild < size_ && array_[rightChild] > array_[maxIndex]) {
         maxIndex = rightChild;
     }
     if (index != maxIndex) {
