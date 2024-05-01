@@ -1,5 +1,7 @@
 #include "../headers/PQHeapMax.hpp"
 
+PQHeapMax::PQHeapMax(const PQHeapMax &other) : PriorityQueue(other) {}
+
 void PQHeapMax::insert(uint32_t element, int priority) {
     if (size_ == capacity_) {
         resize();
