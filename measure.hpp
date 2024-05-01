@@ -1,4 +1,4 @@
-#include "Timer.hpp"
+#include "headers/Timer.hpp"
 #include <iostream>
 enum Function {
     INSERT,
