@@ -1,7 +1,5 @@
 #include "../headers/PQHeapMax.hpp"
 
-
-
 void PQHeapMax::insert(uint32_t element, int priority) {
     if (size_ == capacity_) {
         resize();
@@ -34,7 +32,7 @@ PQHeapMax::Node PQHeapMax::peek() {
     return array_[0];
 }
 
-void PQHeapMax::modifyKey(uint32_t element, int priority) // TODO: Zaimplementowac funkcje modifyKey()
+void PQHeapMax::modifyKey(uint32_t element, int priority)
 {
     int index = -1;
     for (int i = 0; i < size_; i++) {

@@ -12,7 +12,8 @@ public:
         bool operator>(Node const& other);
     };
     PriorityQueue();
-    virtual ~PriorityQueue();
+    PriorityQueue(const PriorityQueue &other);
+    ~PriorityQueue();
     virtual void insert(uint32_t element, int priority) = 0;
     virtual Node extractMax() = 0;
     virtual Node peek() = 0;
