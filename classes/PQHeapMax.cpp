@@ -14,6 +14,18 @@ void PQHeapMax::insert(uint32_t element, int priority) {
     size_++;
 }
 
+void PQHeapMax::insert(Node node) {
+    if (size_ == capacity_) {
+        resize();
+    }
+
+    array_[size_] = node;
+    array_[size_].fifoPriority = size_ + 1;
+    heapifyUp(size_);
+    size_++;
+}
+
+
 PQHeapMax::Node PQHeapMax::extractMax() { 
     if (size_ == 0) {
         throw std::runtime_error("Heap is empty.");
@@ -63,7 +75,7 @@ int PQHeapMax::right(int index) {
 }
 
 void PQHeapMax::heapifyUp(int index) {
-    while(index > 0 && array_[parent(index)].priority < array_[index].priority) {
+    while(index > 0 && array_[parent(index)] < array_[index]) {
         swap(parent(index), index);
         index = parent(index);
     }

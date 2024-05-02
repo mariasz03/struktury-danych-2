@@ -51,7 +51,6 @@ void PriorityQueue::swap(int index1, int index2) {
 void PriorityQueue::resize() {
     int newCapacity = capacity_ * 2;
     Node* newArray = new Node[newCapacity];
-
     for (int i = 0; i < size_; i++) {
         newArray[i] = array_[i];
     }

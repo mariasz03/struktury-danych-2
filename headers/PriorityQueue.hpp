@@ -15,6 +15,7 @@ public:
     PriorityQueue(const PriorityQueue &other);
     ~PriorityQueue();
     virtual void insert(uint32_t element, int priority) = 0;
+    virtual void insert(Node node) = 0;
     virtual Node extractMax() = 0;
     virtual Node peek() = 0;
     virtual void modifyKey(uint32_t element, int priority) = 0;
