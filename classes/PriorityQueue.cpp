@@ -2,7 +2,7 @@
 
 bool PriorityQueue::Node::operator<(Node const& other) {
     if (priority == other.priority) {
-        return fifoPriority > other.fifoPriority;
+        return fifoPriority > other.fifoPriority; // Kiedy priorytety sa takie same, porownaj priorytet fifo
     } else {
         return priority < other.priority;
     }
@@ -54,13 +54,13 @@ uint32_t PriorityQueue::getRandomValue() {
 }
 
 void PriorityQueue::resize() {
-    int newCapacity = capacity_ * 2;
-    Node* newArray = new Node[newCapacity];
+    int newCapacity = capacity_ * 2; // Inicjalizacja nowej pojemnosci, dwa razy wiekszej
+    Node* newArray = new Node[newCapacity]; // Utworzenie tablicy o nowej pojemnosci
     for (int i = 0; i < size_; i++) {
-        newArray[i] = array_[i];
+        newArray[i] = array_[i]; // Wypelnienie nowej tablicy elementami ze starej tablicy
     }
-    delete[] array_;
-    array_ = newArray;
-    capacity_ = newCapacity;
+    delete[] array_; // Usuniecie starej tablicy
+    array_ = newArray; // Przypisanie nowej tablicy jako tablicy sturktury
+    capacity_ = newCapacity; // Przypisanie nowej pojemnosci jako pojemnosci sturktury
 }
 

@@ -67,7 +67,6 @@ void measureAndSave(std::string filename, PriorityQueueType pqType, Function fun
         std::cerr << "Error occurred while opening file.";
         return;
     }
-        
     for (int i = 0; i < numberOfDataSets; i++) {
         double totalTime = 0; // Czas operacji zsumowany z kazdego ziarna
         for (int j = 0; j < numberOfSeeds; j++) {
@@ -88,6 +87,5 @@ void measureAndSave(std::string filename, PriorityQueueType pqType, Function fun
         double avgTime = totalTime / numberOfSeeds; // Wynik usredniony z wszystkich ziaren
         outputFile << dataSetSize[i] << ", " << avgTime << std::endl;
     }
-
     outputFile.close();
 }
