@@ -4,12 +4,12 @@
 #include <string>
 
 #include "headers/PriorityQueue.hpp"
-
+// Funkcja zapisujaca strukture (container) w pliku (sciezka data/"filename") 
 template<typename T>
 void saveContainerToFile(T container, std::string filename) {
     std::ofstream outputFile("data/" + filename + ".csv");
     if (!outputFile.is_open()) {
-        std::cerr << "Error occured while opening file.";
+        std::cerr << "Wystapil blad podczas proby otwarcia pliku.";
         return;
     }
     while (container.getSize() != 0) {
@@ -17,12 +17,12 @@ void saveContainerToFile(T container, std::string filename) {
         outputFile << currentNode.element << ", " << currentNode.priority << std::endl;
     }
 }
-
+// Funkcja ladujaca do struktury (container) dane z pliku (sciezka data/"filename")
 template<typename T>
 void loadFileToContainer(T &container, std::string filename) {
     std::ifstream inputFile("data/" + filename + ".csv");
     if (!inputFile.is_open()) {
-        std::cerr << "Error occured while opening file.";
+        std::cerr << "Wystapil blad podczas proby otwarcia pliku.";
         return;
     }
     std::string line;

@@ -28,7 +28,7 @@ void PQHeapMax::insert(Node node) {
 
 PQHeapMax::Node PQHeapMax::extractMax() { 
     if (size_ == 0) {
-        throw std::runtime_error("Heap is empty.");
+        throw std::runtime_error("Kopiec jest pusty.");
     }
 
     Node maxElement = array_[0];
@@ -40,9 +40,8 @@ PQHeapMax::Node PQHeapMax::extractMax() {
 
 PQHeapMax::Node PQHeapMax::peek() {
     if (size_ == 0) {
-        throw std::runtime_error("Heap is empty.");
+        throw std::runtime_error("Kopiec jest pusty.");
     }
-
     return array_[0];
 }
 
@@ -55,7 +54,6 @@ void PQHeapMax::modifyKey(uint32_t element, uint32_t priority)
         } 
     }
     if (index == -1) {
-        std::cerr << "Element not found in the heap.";
         return;
     }
     uint32_t oldPriority = array_[index].priority;

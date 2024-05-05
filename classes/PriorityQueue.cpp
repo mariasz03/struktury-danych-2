@@ -48,6 +48,11 @@ void PriorityQueue::swap(int index1, int index2) {
     array_[index2] = temp;
 }
 
+uint32_t PriorityQueue::getRandomValue() {
+    int index = rand() % size_;
+    return array_[index].element;
+}
+
 void PriorityQueue::resize() {
     int newCapacity = capacity_ * 2;
     Node* newArray = new Node[newCapacity];
