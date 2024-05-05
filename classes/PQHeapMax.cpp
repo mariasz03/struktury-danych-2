@@ -2,8 +2,8 @@
 
 PQHeapMax::PQHeapMax(const PQHeapMax &other) : PriorityQueue(other) {}
 
-void PQHeapMax::insert(uint32_t element, int priority) {
-    if (size_ == capacity_) {
+void PQHeapMax::insert(uint32_t element, uint32_t priority) {
+    if (size_ >= capacity_) {
         resize();
     }
 
@@ -46,7 +46,7 @@ PQHeapMax::Node PQHeapMax::peek() {
     return array_[0];
 }
 
-void PQHeapMax::modifyKey(uint32_t element, int priority)
+void PQHeapMax::modifyKey(uint32_t element, uint32_t priority)
 {
     int index = -1;
     for (int i = 0; i < size_; i++) {
@@ -58,8 +58,13 @@ void PQHeapMax::modifyKey(uint32_t element, int priority)
         std::cerr << "Element not found in the heap.";
         return;
     }
+    uint32_t oldPriority = array_[index].priority;
     array_[index].priority = priority;
-    heapifyDown(index);
+    if (priority > oldPriority) {
+        heapifyUp(index);
+    } else {
+        heapifyDown(index);
+    }
 }
 
 int PQHeapMax::parent(int index) {

@@ -1,6 +1,6 @@
 #include "../headers/PQArrayMax.hpp"
 
-void PQArrayMax::insert(uint32_t element, int priority)
+void PQArrayMax::insert(uint32_t element, uint32_t priority)
 {
 }
 
@@ -12,6 +12,6 @@ PQArrayMax::Node PQArrayMax::peek()
 {
 }
 
-void PQArrayMax::modifyKey(uint32_t element, int priority)
+void PQArrayMax::modifyKey(uint32_t element, uint32_t priority)
 {
 }

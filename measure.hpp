@@ -22,7 +22,7 @@ enum PriorityQueueType {
 };
 
 template<typename T>
-double measure(T container, Function func, int32_t number = 0, int priority = 0) { 
+double measure(T container, Function func, uint32_t number = 0, uint32_t priority = 0) { 
     Timer timer;
     switch (func) {
         case INSERT:
@@ -45,7 +45,7 @@ double measure(T container, Function func, int32_t number = 0, int priority = 0)
 };
 
 template<typename T>
-double measureAverage(T container, Function func, int repetitions, int32_t number = 0, int priority = 0) {
+double measureAverage(T container, Function func, int repetitions, uint32_t number = 0, uint32_t priority = 0) {
     double avg;
     double sum = 0;
     for (int i = 0; i < repetitions; i++) {
@@ -55,29 +55,33 @@ double measureAverage(T container, Function func, int repetitions, int32_t numbe
     return avg;
 };
 
-void measureAndSave(std::string filename, PriorityQueueType pqType, Function func, int numberOfDataSets, int dataSetSize[], int seed, int repetitions, int32_t number = 0, int priority = 0) {
+void measureAndSave(std::string filename, PriorityQueueType pqType, Function func, int numberOfDataSets, int dataSetSize[], int numberOfSeeds, int seed[], int repetitions, uint32_t number[] = 0, uint32_t priority[] = 0) {
     std::ofstream outputFile("measured/" + filename + ".csv");
     if (!outputFile.is_open()) {
-        std::cerr << "Error occured while opening file.";
+        std::cerr << "Error occurred while opening file.";
         return;
     }
+        
     for (int i = 0; i < numberOfDataSets; i++) {
-        double time;
-        switch (pqType) {
-            case HEAPMAX: {
-                PQHeapMax container;
-                fillContainerWithRandomData(container, dataSetSize[i], seed);
-                time = measureAverage(container, func, repetitions);
-                break;
+        double totalTime = 0; 
+        for (int j = 0; j < numberOfSeeds; j++) {
+            double time = 0; 
+            switch (pqType) {
+                case HEAPMAX: {
+                    PQHeapMax container; 
+                    fillContainerWithRandomData(container, dataSetSize[i], seed[j]);
+                    time = measureAverage(container, func, repetitions, number[j], priority[j]);
+                    break;
+                }
+                case ARRAYMAX: {
+                    break;
+                }
             }
-            case ARRAYMAX: {
-                // PQArrayMax container;
-                // fillContainerWithRandomData(container, dataSetSize[i], seed);
-                // time = measureAverage(container, func, repetitions);
-                break;
-            }
+            totalTime += time;
         }
-        outputFile << dataSetSize[i] << ", " << time << std::endl;
+        double avgTime = totalTime / numberOfSeeds;
+        outputFile << dataSetSize[i] << ", " << avgTime << std::endl;
     }
+
     outputFile.close();
 }
