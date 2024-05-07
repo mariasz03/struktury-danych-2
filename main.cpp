@@ -115,6 +115,7 @@ int main() {
         switch (structureMenu) {
             case 1: {
                 // PQArrayMax pqArray;
+                // performOperations(pqArray);
                 break;
             }
             case 2: {
@@ -124,8 +125,8 @@ int main() {
             }
             case 3: {
                 // Tablica ziaren oraz inicjalizacja
-                int seeds[5]; 
-                for (int i = 0; i < 5; i++) {
+                int seeds[20]; 
+                for (int i = 0; i < 20; i++) {
                     seeds[i] = rand();
                 }
                 // Tablica elementow oraz priorytetow ktore sa wykorzystane podczas uzycia funkcji insert i modifyKey, generowane losowo
@@ -134,16 +135,16 @@ int main() {
                 for (int i = 0; i < 5; i++) {
                     std::mt19937 gen(seeds[i]);
                     element[i] = generateRandomNumberFromSeed(gen);
-                    priority[i] = generateRandomNumberFromSeed(gen);
+                    priority[i] =  generateRandomNumberFromSeed(gen);
                     std::cout << std::endl << i+1 << ". Seed: " << seeds[i] << std::endl << "element dodawany/modyfikowany: "  << element[i] << "," << std::endl << "priorytet: " << priority[i] << std::endl;
                 }
-                // Punkty pomiarowe - zestawy danych o roznej wielkosci do pomiaru. Dla kazdego seedu 12 roznych wielkosci danych
-                int dataSetSize[12] = {100000, 200000, 300000, 400000, 500000, 600000, 800000, 900000, 1000000, 2000000, 3000000, 4000000};
-                measureAndSave("HEAP_INSERT", HEAPMAX, INSERT, 12, dataSetSize, 5, seeds, 50, element, priority);
-                measureAndSave("HEAP_EXTRACTMAX", HEAPMAX, EXTRACT_MAX, 12, dataSetSize, 5, seeds, 50, element, priority);
-                measureAndSave("HEAP_PEEK", HEAPMAX, PEEK, 12, dataSetSize, 5, seeds, 50, element, priority);
-                measureAndSave("HEAP_MODIFYKEY", HEAPMAX, MODIFY_KEY, 12, dataSetSize, 5, seeds, 50, element, priority);
-                measureAndSave("HEAP_RETURNSIZE", HEAPMAX, RETURN_SIZE, 12, dataSetSize, 5, seeds, 50, element, priority);
+                // Punkty pomiarowe - zestawy danych o roznej wielkosci do pomiaru. Dla kazdego seedu 9 roznych wielkosci danych
+                int dataSetSize[10] = {8000, 16000, 32000, 64000, 128000, 256000, 512000, 1024000, 2048000, 4096000};
+                measureAndSave("HEAP_INSERT", HEAPMAX, INSERT, 10, dataSetSize, 20, seeds, 100, element, priority);
+                measureAndSave("HEAP_EXTRACTMAX", HEAPMAX, EXTRACT_MAX, 10, dataSetSize, 20, seeds, 100, element, priority);
+                measureAndSave("HEAP_PEEK", HEAPMAX, PEEK, 10, dataSetSize, 20, seeds, 100, element, priority);
+                measureAndSave("HEAP_MODIFYKEY", HEAPMAX, MODIFY_KEY, 10, dataSetSize, 20, seeds, 100, element, priority);
+                measureAndSave("HEAP_RETURNSIZE", HEAPMAX, RETURN_SIZE, 10, dataSetSize, 20, seeds, 100, element, priority);
                 std::cout << "Pomiary zostaly wykonane i zapisane w pliku.";
                 break;
             }

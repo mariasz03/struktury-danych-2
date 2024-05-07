@@ -26,7 +26,6 @@ double measure(T container, Function func, uint32_t number = 0, uint32_t priorit
     switch (func) {
         case INSERT:
             container.insert(number, priority);
-            std::cout << number << " " << priority;
             break;
         case EXTRACT_MAX:
             container.extractMax();
