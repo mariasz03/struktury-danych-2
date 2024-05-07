@@ -12,7 +12,6 @@ private:
     int initialCapacity_;
     int capacity_;
     int size_;
-
 public:
     ArrayList(int initialCapacity = 10);
     ~ArrayList();
@@ -20,14 +19,12 @@ public:
     Element getElement(int index) const;
     void removeFrom(int index);
     int getSize() const;
-    
 };
 
 class PQArrayMax : public PriorityQueue {
 private:
     ArrayList array_;
     int findMaxIndex() const;
-
 public:
     PQArrayMax(int capacity = 10);
     void insert(uint32_t element, uint32_t priority) override;
