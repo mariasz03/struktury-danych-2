@@ -1,6 +1,6 @@
 #include "../headers/PQArrayMax.hpp"
 
-void PQArrayMax::insert(uint32_t element, uint32_t priority) {
+void PQArrayMax::insert(uint32_t element, uint32_t priority) {  //dodawanie elementu o priorytecie na koniec kolejki
     if (size_ == capacity_) {
         resize(); // Zwiększenie rozmiaru tablicy dwukrotnie
     }
@@ -10,7 +10,7 @@ void PQArrayMax::insert(uint32_t element, uint32_t priority) {
     size_++;
 }
 
-void PQArrayMax::insert(Node node) {
+void PQArrayMax::insert(Node node) {  //dodawanie węzła na koniec kolejki
     if (size_ == capacity_) {
         resize(); 
     }
@@ -19,7 +19,7 @@ void PQArrayMax::insert(Node node) {
     size_++;
 }
 
-PQArrayMax::Node PQArrayMax::extractMax() {
+PQArrayMax::Node PQArrayMax::extractMax() {  //usuwanie elementu z kolejki o pierwszym najwyższym priorytecie
     int maxIndex = findMaxIndex(); // Znalezienie indeksu elementu o najwiekszym priorytecie
     if (maxIndex == -1) {
         throw std::runtime_error("Tablica jest pusta.");
@@ -44,7 +44,7 @@ PQArrayMax::Node PQArrayMax::extractMax() {
     return maxElement;
 }
 
-PQArrayMax::Node PQArrayMax::peek() {
+PQArrayMax::Node PQArrayMax::peek() {  //zwrócenie elementu o pierwszym najwyższym priorytecie
     int maxIndex = findMaxIndex();
     if (maxIndex == -1) {
         throw std::runtime_error("Tablica jest pusta.");
@@ -53,7 +53,7 @@ PQArrayMax::Node PQArrayMax::peek() {
     return maxElement;
 }
 
-void PQArrayMax::modifyKey(uint32_t element, uint32_t newPriority) {
+void PQArrayMax::modifyKey(uint32_t element, uint32_t newPriority) {  //zmiana priorytetu pierwszego wystąpinia elementu
     for (int i = 0; i < size_; i++) {
         if (array_[i].element == element) {
             array_[i].priority = newPriority;
@@ -62,7 +62,7 @@ void PQArrayMax::modifyKey(uint32_t element, uint32_t newPriority) {
     }
 }
 
-int PQArrayMax::findMaxIndex() const {
+int PQArrayMax::findMaxIndex() const {  //funkcja znajdująca największy indeks
     if (size_ == 0) return -1;
     int maxIndex = 0;
     int maxPriority = array_[0].priority;
