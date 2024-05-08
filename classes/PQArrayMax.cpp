@@ -1,25 +1,25 @@
 #include "../headers/PQArrayMax.hpp"
 
-void PQArrayMax::insert(uint32_t element, uint32_t priority) {  //dodawanie elementu o priorytecie na koniec kolejki
+void PQArrayMax::insert(uint32_t element, uint32_t priority) {  // Dodawanie elementu i jego priorytetu na koniec kolejki
     if (size_ == capacity_) {
         resize(); // Zwiększenie rozmiaru tablicy dwukrotnie
     }
-    array_[size_].element = element; // Wstawienie elementu na końcu arraylist
+    array_[size_].element = element; // Wstawienie elementu i jego priorytetu na końcu arraylist
     array_[size_].priority = priority;
     array_[size_].fifoPriority = size_ + 1; // Ustawienie priorytetu fifo na podstawie obecnej wielkosci tablicy 
     size_++;
 }
 
-void PQArrayMax::insert(Node node) {  //dodawanie węzła na koniec kolejki
+void PQArrayMax::insert(Node node) {  // Dodawanie węzła na koniec kolejki
     if (size_ == capacity_) {
         resize(); 
     }
-    array_[size_] = node;
+    array_[size_] = node;  // Wstawienie węzła na końcu arraylist
     array_[size_].fifoPriority = size_ + 1;
     size_++;
 }
 
-PQArrayMax::Node PQArrayMax::extractMax() {  //usuwanie elementu z kolejki o pierwszym najwyższym priorytecie
+PQArrayMax::Node PQArrayMax::extractMax() {  // Usuwanie pierwszego elementu z kolejki o najwyższym priorytecie
     int maxIndex = findMaxIndex(); // Znalezienie indeksu elementu o najwiekszym priorytecie
     if (maxIndex == -1) {
         throw std::runtime_error("Tablica jest pusta.");
@@ -44,16 +44,16 @@ PQArrayMax::Node PQArrayMax::extractMax() {  //usuwanie elementu z kolejki o pie
     return maxElement;
 }
 
-PQArrayMax::Node PQArrayMax::peek() {  //zwrócenie elementu o pierwszym najwyższym priorytecie
-    int maxIndex = findMaxIndex();
+PQArrayMax::Node PQArrayMax::peek() {  // Zwrócenie pierwszego elementu najwyższym priorytecie
+    int maxIndex = findMaxIndex(); // Znalezienie indeksu elementu o najwiekszym priorytecie
     if (maxIndex == -1) {
         throw std::runtime_error("Tablica jest pusta.");
     }
     Node maxElement = array_[maxIndex];
-    return maxElement;
+    return maxElement; // Zwrócenie elementu o najwyższym priorytecie 
 }
 
-void PQArrayMax::modifyKey(uint32_t element, uint32_t newPriority) {  //zmiana priorytetu pierwszego wystąpinia elementu
+void PQArrayMax::modifyKey(uint32_t element, uint32_t newPriority) {  // Zmiana priorytetu pierwszego wystąpinia elementu
     for (int i = 0; i < size_; i++) {
         if (array_[i].element == element) {
             array_[i].priority = newPriority;
@@ -62,7 +62,7 @@ void PQArrayMax::modifyKey(uint32_t element, uint32_t newPriority) {  //zmiana p
     }
 }
 
-int PQArrayMax::findMaxIndex() const {  //funkcja znajdująca największy indeks
+int PQArrayMax::findMaxIndex() const {  // Funkcja znajdująca największy indeks
     if (size_ == 0) return -1;
     int maxIndex = 0;
     int maxPriority = array_[0].priority;
