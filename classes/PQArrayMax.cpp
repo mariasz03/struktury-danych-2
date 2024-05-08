@@ -1,66 +1,47 @@
 #include "../headers/PQArrayMax.hpp"
-#include <iostream>
 
-ArrayList::ArrayList(int initialCapacity) : initialCapacity_(initialCapacity), capacity_(initialCapacity), size_(0) {
-    array_ = new Element[capacity_];
-}
-
-ArrayList::~ArrayList() {
-    delete[] array_;
-}
-
-void ArrayList::addLast(Element element) {
-    if (size_ >= capacity_) {
-        int newCapacity = capacity_ * 2;
-        Element* newArray = new Element[newCapacity];
-        for (int i = 0; i < size_; i++) {
-            newArray[i] = array_[i];
-        }
-        delete[] array_;
-        array_ = newArray;
-        capacity_ = newCapacity;
+void PQArrayMax::insert(uint32_t element, uint32_t priority) {
+    if (size_ == capacity_) {
+        resize(); // Zwiększenie rozmiaru tablicy dwukrotnie
     }
-    array_[size_] = element;
+    array_[size_].element = element; // Wstawienie elementu na końcu arraylist
+    array_[size_].priority = priority;
+    array_[size_].fifoPriority = size_ + 1; // Ustawienie priorytetu fifo na podstawie obecnej wielkosci tablicy 
     size_++;
 }
 
-Element ArrayList::getElement(int index) const {
-    if (index < 0 || index >= size_) {
-        std::cout<<"Index out of range.";
+void PQArrayMax::insert(Node node) {
+    if (size_ == capacity_) {
+        resize(); 
     }
-    return array_[index];
+    array_[size_] = node;
+    array_[size_].fifoPriority = size_ + 1;
+    size_++;
 }
-
-void ArrayList::removeFrom(int index) {
-    if (index < 0 || index >= size_) {
-        std::cout<<"Index out of range.";
-    }
-    for (int i = index; i < size_ - 1; i++) {
-        array_[i] = array_[i + 1];
-    }
-    size_--;
-}
-
-int ArrayList::getSize() const {
-    return size_;
-}
-/////////////////
-PQArrayMax::PQArrayMax(int capacity) : array_(capacity) {}
-
-void PQArrayMax::insert(uint32_t element, uint32_t priority) {
-    array_.addLast({element, priority});
-}
-
-void PQArrayMax::insert(Node node) {}
 
 PQArrayMax::Node PQArrayMax::extractMax() {
-    int maxIndex = findMaxIndex();
+    int maxIndex = findMaxIndex(); // Znalezienie indeksu elementu o najwiekszym priorytecie
     if (maxIndex == -1) {
         throw std::runtime_error("Tablica jest pusta.");
     }
-    Element maxElement = array_.getElement(maxIndex);
-    array_.removeFrom(maxIndex);
-    return Node{maxElement.value, maxElement.priority};
+    Node maxElement = array_[maxIndex]; 
+    if (size_ - 1 <= capacity_ / 2 && capacity_ > 10) { // Usuniecie najwiekszego elementu oraz przesuniecie elementow w tablicy
+        capacity_ /= 2;
+        Node *newArray = new Node[capacity_];
+        for (int i = 0, j = 0; i < size_; i++) {
+            if (i != maxIndex) {
+                newArray[j++] = array_[i];
+            }
+        }
+        delete[] array_;
+        array_ = newArray;
+    } else {
+        for (int i = maxIndex; i < size_ - 1; i++) {
+            array_[i] = array_[i + 1];
+        }
+    }
+    size_--;
+    return maxElement;
 }
 
 PQArrayMax::Node PQArrayMax::peek() {
@@ -68,28 +49,29 @@ PQArrayMax::Node PQArrayMax::peek() {
     if (maxIndex == -1) {
         throw std::runtime_error("Tablica jest pusta.");
     }
-    Element maxElement = array_.getElement(maxIndex);
-    return Node{maxElement.value, maxElement.priority};
+    Node maxElement = array_[maxIndex];
+    return maxElement;
 }
 
 void PQArrayMax::modifyKey(uint32_t element, uint32_t newPriority) {
-    for (int i = 0; i < array_.getSize(); i++) {
-        if (array_.getElement(i).value == element) {
-            array_.removeFrom(i);
-            array_.addLast({element, newPriority});
+    for (int i = 0; i < size_; i++) {
+        if (array_[i].element == element) {
+            array_[i].priority = newPriority;
             break;
         }
     }
 }
 
 int PQArrayMax::findMaxIndex() const {
-    if (array_.getSize() == 0) return -1;
+    if (size_ == 0) return -1;
     int maxIndex = 0;
-    int maxPriority = array_.getElement(0).priority;
-    for (int i = 1; i < array_.getSize(); i++) {
-        if (array_.getElement(i).priority > maxPriority) {
-            maxPriority = array_.getElement(i).priority;
-            maxIndex = i;
+    int maxPriority = array_[0].priority;
+    for (int i = 0; i < size_; i++) { // Liniowe przejscie przez cala tablice w celu znalezienia najwiekszego indeksu
+        if (array_[i].priority > maxPriority) {
+            if (array_[i].priority > maxPriority || (array_[i].priority == maxPriority && array_[i].fifoPriority < array_[maxIndex].fifoPriority)) {
+                maxPriority = array_[i].priority;
+                maxIndex = i;
+            }
         }
     }
     return maxIndex;

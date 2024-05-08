@@ -1,7 +1,6 @@
 #include <cstdint>
 #include <random>
 
-#include "headers/PriorityQueue.hpp"
 // Funkcja generująca losowy numer z zakresu od 0 do 4 294 967 295
 uint32_t generateRandomNumberFromSeed(std::mt19937 &gen) {  
     std::uniform_int_distribution<uint32_t> dis(0, std::numeric_limits<uint32_t>::max());

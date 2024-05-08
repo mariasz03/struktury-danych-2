@@ -114,8 +114,8 @@ int main() {
         std::cin >> structureMenu;
         switch (structureMenu) {
             case 1: {
-                // PQArrayMax pqArray;
-                // performOperations(pqArray);
+                PQArrayMax pqArray;
+                performOperations(pqArray);
                 break;
             }
             case 2: {
@@ -125,8 +125,8 @@ int main() {
             }
             case 3: {
                 // Tablica ziaren oraz inicjalizacja
-                int seeds[20]; 
-                for (int i = 0; i < 20; i++) {
+                int seeds[5]; 
+                for (int i = 0; i < 5; i++) {
                     seeds[i] = rand();
                 }
                 // Tablica elementow oraz priorytetow ktore sa wykorzystane podczas uzycia funkcji insert i modifyKey, generowane losowo
@@ -145,6 +145,11 @@ int main() {
                 measureAndSave("HEAP_PEEK", HEAPMAX, PEEK, 10, dataSetSize, 20, seeds, 100, element, priority);
                 measureAndSave("HEAP_MODIFYKEY", HEAPMAX, MODIFY_KEY, 10, dataSetSize, 20, seeds, 100, element, priority);
                 measureAndSave("HEAP_RETURNSIZE", HEAPMAX, RETURN_SIZE, 10, dataSetSize, 20, seeds, 100, element, priority);
+                measureAndSave("ARRAY_INSERT", ARRAYMAX, INSERT, 10, dataSetSize, 5, seeds, 100, element, priority);
+                measureAndSave("ARRAY_EXTRACT", ARRAYMAX, EXTRACT_MAX, 10, dataSetSize, 5, seeds, 100, element, priority);
+                measureAndSave("ARRAY_PEEK", ARRAYMAX, PEEK, 10, dataSetSize, 20, seeds, 100, element, priority);
+                measureAndSave("ARRAY_MODIFYKEY", ARRAYMAX, MODIFY_KEY, 10, dataSetSize, 20, seeds, 100, element, priority);
+                measureAndSave("ARRAY_RETURNSIZE", ARRAYMAX, RETURN_SIZE, 10, dataSetSize, 20, seeds, 100, element, priority);
                 std::cout << "Pomiary zostaly wykonane i zapisane w pliku.";
                 break;
             }

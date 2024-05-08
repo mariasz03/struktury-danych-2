@@ -6,6 +6,7 @@
 #include "headers/PQHeapMax.hpp"
 #include "headers/Timer.hpp"
 #include "generate_data.hpp"
+
 enum Function { // Funkcje ktore mozna zbadac
     INSERT,
     EXTRACT_MAX,
@@ -66,18 +67,22 @@ void measureAndSave(std::string filename, PriorityQueueType pqType, Function fun
         std::cerr << "Error occurred while opening file.";
         return;
     }
+    
     for (int i = 0; i < numberOfDataSets; i++) {
         double totalTime = 0; // Czas operacji zsumowany z kazdego ziarna
         for (int j = 0; j < numberOfSeeds; j++) {
             double time = 0; // Sredni czas pojedynczej operacji
             switch (pqType) {
                 case HEAPMAX: {
-                    PQHeapMax container; 
-                    fillContainerWithRandomData(container, dataSetSize[i], seed[j]);
-                    time = measureAverage(container, func, repetitions, number[j], priority[j]);
+                    PQHeapMax heap; 
+                    fillContainerWithRandomData(heap, dataSetSize[i], seed[j]);
+                    time = measureAverage(heap, func, repetitions, number[j], priority[j]);
                     break;
                 }
                 case ARRAYMAX: {
+                    PQArrayMax array;
+                    fillContainerWithRandomData(array, dataSetSize[i], seed[j]);
+                    time = measureAverage(array, func, repetitions, number[j], priority[j]);
                     break;
                 }
             }
